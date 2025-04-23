@@ -184,7 +184,7 @@ class myTabView(customtkinter.CTkTabview):
 
 	def sites_display_richness(self, marker):
 
-		print('Done')
+		print(marker.text)
 
 
 	def login_user(self):

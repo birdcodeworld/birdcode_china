@@ -13,6 +13,16 @@ class Chengdu():
 		self.gbif_records = 1084
 
 
+class Tangjiahe():
+
+	def __init__(self):
+
+		self.name = 'Tangjiahe'
+
+
 
 
 Chengdu_00 = Chengdu()
+Tangjiahe_00 = Tangjiahe()
+
+Sites = [Chengdu_00, Tangjiahe_00]
