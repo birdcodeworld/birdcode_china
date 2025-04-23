@@ -19,6 +19,9 @@ username_db = ''
 login_check = False
 types_bor = ''
 folder_content = ''
+x = 0
+counter = 0
+path = ''
 
 
 class myTabView(customtkinter.CTkTabview):
@@ -190,9 +193,9 @@ class myTabView(customtkinter.CTkTabview):
 	def sites_display_richness(self, marker):
 
 		global folder_content
-
-		x = 0
-		counter = 0
+		global x
+		global counter
+		global path
 
 		self.current_species = turn_species[x]
 		path = self.current_species.images_url
@@ -200,7 +203,7 @@ class myTabView(customtkinter.CTkTabview):
 
 		if marker.text in self.current_species.sites_present:
 
-			self.BirdImage = customtkinter.CTkImage(dark_image = Image.open(path + folder_content[1]), size = (300, 221))
+			self.BirdImage = customtkinter.CTkImage(dark_image = Image.open(path + folder_content[counter]), size = (300, 221))
 			self.BirdImage_display = customtkinter.CTkLabel(master = self.tab('Species'), image = self.BirdImage, text = '')
 			self.BirdImage_display.grid(row = 0, column = 0, padx = 20, pady = 20)
 			self.BirdName = customtkinter.CTkLabel(master = self.tab('Species'), text = self.current_species.scientific_name,
@@ -214,6 +217,17 @@ class myTabView(customtkinter.CTkTabview):
 	def Advance_photo_Bird(self):
 
 		global folder_content
+		global counter
+		global path
+
+		counter = counter + 1
+
+		if counter < len(folder_content):
+
+			self.BirdImage = customtkinter.CTkImage(dark_image = Image.open(path + folder_content[counter]), size = (300, 221))
+			self.BirdImage_display.configure(image = self.BirdImage)
+
+
 
 		print(folder_content)
 
