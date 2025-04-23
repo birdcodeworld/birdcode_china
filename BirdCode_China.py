@@ -200,18 +200,44 @@ class myTabView(customtkinter.CTkTabview):
 		self.current_species = turn_species[x]
 		path = self.current_species.images_url
 		folder_content = os.listdir(self.current_species.images_url)
+		vertical_zh = self.current_species.chinese_name
+		vertical_name_zh = ''
+
+		for i in vertical_zh:
+
+			vertical_name_zh = vertical_name_zh + i + '\n'
+
 
 		if marker.text in self.current_species.sites_present:
 
-			self.BirdImage = customtkinter.CTkImage(dark_image = Image.open(path + folder_content[counter]), size = (300, 221))
+			self.BirdImage = customtkinter.CTkImage(dark_image = Image.open(path + folder_content[counter]), size = (550, 475))
 			self.BirdImage_display = customtkinter.CTkLabel(master = self.tab('Species'), image = self.BirdImage, text = '')
-			self.BirdImage_display.grid(row = 0, column = 0, padx = 20, pady = 20)
+			self.BirdImage_display.grid(row = 0, column = 0, padx = 20, pady = 20, columnspan = 2)
 			self.BirdName = customtkinter.CTkLabel(master = self.tab('Species'), text = self.current_species.scientific_name,
 				font = ('Times New Roman', 25))
 			self.BirdName.grid(row = 1, column = 0)
+			self.retro_bird_photo = customtkinter.CTkButton(master = self.tab('Species'), text = 'Retro',
+				command = self.retro_photo_bird)
+			self.retro_bird_photo.grid(row = 2, column = 0, pady = 20)
 			self.advance_bird_photo = customtkinter.CTkButton(master = self.tab('Species'), text = 'Advance', 
 				command = self.Advance_photo_Bird)
-			self.advance_bird_photo.grid(row = 2, column = 0)
+			self.advance_bird_photo.grid(row = 2, column = 1, pady = 20)
+			self.name_bird_zh = customtkinter.CTkLabel(master = self.tab('Species'), text = vertical_name_zh,
+				font = ('Kaiti', 50))
+			self.name_bird_zh.grid(row = 0, column = 2, padx = 30, rowspan = 2)
+
+
+	def retro_photo_bird(self):
+
+		global folder_content
+		global counter
+		global path
+
+		if counter > 0:
+
+			counter = counter - 1
+			self.BirdImage = customtkinter.CTkImage(dark_image = Image.open(path + folder_content[counter]), size = (550, 475))
+			self.BirdImage_display.configure(image = self.BirdImage)
 
 
 	def Advance_photo_Bird(self):
@@ -220,11 +246,10 @@ class myTabView(customtkinter.CTkTabview):
 		global counter
 		global path
 
-		counter = counter + 1
+		if counter < len(folder_content) - 1:
 
-		if counter < len(folder_content):
-
-			self.BirdImage = customtkinter.CTkImage(dark_image = Image.open(path + folder_content[counter]), size = (300, 221))
+			counter = counter + 1
+			self.BirdImage = customtkinter.CTkImage(dark_image = Image.open(path + folder_content[counter]), size = (550, 475))
 			self.BirdImage_display.configure(image = self.BirdImage)
 
 

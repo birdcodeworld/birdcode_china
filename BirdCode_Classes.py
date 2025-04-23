@@ -12,15 +12,7 @@ class Accipiter_trivirgatus():
 		self.images_url = 'Images/Birds/Accipitriformes/Accipiter_trivirgatus/'
 
 
-	def Image_display(self):
-
-		for i, value in enumerate(Sites):
-
-			if value.name in self.sites_present:
-
-				print('Done')
-
-
+	
 
 Accipiter_trivirgatus_00 = Accipiter_trivirgatus()
 
