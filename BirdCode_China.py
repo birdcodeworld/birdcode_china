@@ -4,6 +4,7 @@ import tkinter as tk
 from tkintermapview import TkinterMapView
 import psycopg2
 import hashlib
+from Sites_Classes import *
 from Markers import *
 from Audios import *
 #from db_connections import *
@@ -28,6 +29,11 @@ class myTabView(customtkinter.CTkTabview):
 		self.add('Birdwatcher Types')
 		self.add('Birding China')
 		self.add('Map of provinces Locations')
+		self.add('Species')
+
+
+
+
 
 		self.username = tk.StringVar()
 		self.Eagle_logo = customtkinter.CTkImage(dark_image = Image.open('Images/BirdCode_logo.png'), size = (600, 528))
@@ -159,6 +165,28 @@ class myTabView(customtkinter.CTkTabview):
 		self.name2.grid(row = 0, column = 1)
 
 
+	def define_province_zoom(self, marker):
+
+		#print(marker1.text)
+		#playsound(audio_provinces[int(marker.text) - 1])
+		self.map_widget_province.set_position(marker.position[0], marker.position[1])
+		self.map_widget_province.set_zoom(7)
+		marker.change_icon(self.mark_red)
+
+		for i, self.value in enumerate(bird_china_markers[marker.text]):
+
+			self.lat = self.value.latitude
+			self.long = self.value.longitude
+			self.name_marker = self.value.name
+			self.map_widget_province.set_marker(self.lat, self.long, text = self.name_marker, icon = self.mark_blue, 
+				text_color = 'white', command = self.sites_display_richness)
+
+
+	def sites_display_richness(self, marker):
+
+		print('Done')
+
+
 	def login_user(self):
 
 		global username_db
@@ -261,21 +289,7 @@ class myTabView(customtkinter.CTkTabview):
 		self.miConexion2.close()
 
 
-	def define_province_zoom(self, marker):
-
-		#print(marker1.text)
-		playsound(audio_provinces[int(marker.text) - 1])
-		self.map_widget_province.set_position(marker.position[0], marker.position[1])
-		self.map_widget_province.set_zoom(7)
-		marker.change_icon(self.mark_red)
-
-		for i, value in enumerate(bird_china_markers[marker.text]):
-
-			self.lat = value[2]
-			self.long = value[3]
-			self.name_marker = value[0]
-			self.map_widget_province.set_marker(self.lat, self.long, text = self.name_marker, icon = self.mark_blue, 
-				text_color = 'white')
+	
 
 
 	def name(self, marker2):
