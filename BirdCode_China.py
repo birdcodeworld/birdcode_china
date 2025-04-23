@@ -6,6 +6,7 @@ import psycopg2
 import hashlib
 from Sites_Classes import *
 from Markers import *
+from BirdCode_Classes import *
 from Audios import *
 #from db_connections import *
 from hash import *
@@ -30,10 +31,6 @@ class myTabView(customtkinter.CTkTabview):
 		self.add('Birding China')
 		self.add('Map of provinces Locations')
 		self.add('Species')
-
-
-
-
 
 		self.username = tk.StringVar()
 		self.Eagle_logo = customtkinter.CTkImage(dark_image = Image.open('Images/BirdCode_logo.png'), size = (600, 528))
@@ -104,9 +101,11 @@ class myTabView(customtkinter.CTkTabview):
 		#self.mark = customtkinter.CTkImage(dark_image = Image.open('Images/logo (3).png'))
 
 		self.map_widget_china = TkinterMapView(master = self.tab('Birding China'), width = 800, height = 570)
+		self.map_widget_china.set_tile_server('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}')
 		self.map_widget_china.grid(row = 0, column = 0, padx = 10, pady = 10, rowspan = 6)
 		self.map_widget_china.set_position(36.220879, 104.787180)
 		self.map_widget_china.set_zoom(4)
+		#self.map_widget_china.set_tile_server('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}')
 		
 		self.map_title = customtkinter.CTkLabel(master = self.tab('Birding China'), text = 'PROVINCE NAME GUESSING GAME', font = ('Times New Roman', 20))
 		self.map_title.grid(row = 0, column = 1, padx = 30, columnspan = 2)
@@ -134,12 +133,13 @@ class myTabView(customtkinter.CTkTabview):
 		self.change_photo_button_frw.grid(row = 5, column = 1, padx = 20, sticky = 'w')
 
 		self.current_path = os.path.join(os.path.dirname(os.path.abspath(__file__)))
-		self.mark_black = ImageTk.PhotoImage(Image.open(os.path.join(self.current_path, "Images", "Marker_black.png")).resize((40, 52)))
-		self.mark_white = ImageTk.PhotoImage(Image.open(os.path.join(self.current_path, "Images", "Marker_white.png")).resize((40, 52)))
+		self.mark_black = ImageTk.PhotoImage(Image.open("Images/Marker_black.png").resize((40, 52)))
+		self.mark_white = ImageTk.PhotoImage(Image.open(os.path.join(self.current_path, "Images", "Marker_white.png")).resize((35, 45)))
 		self.mark_red = ImageTk.PhotoImage(Image.open(os.path.join(self.current_path, "Images", "Marker_red.png")).resize((40, 52)))
 		self.mark_blue = ImageTk.PhotoImage(Image.open(os.path.join(self.current_path, "Images", "Marker_blue.png")).resize((40, 52)))
+		self.bn = tk.PhotoImage(file = 'Images/Marker_black.png')
 
-		self.marker1 = self.map_widget_china.set_marker(31.519240, 103.117257, text = '1', icon = self.mark_black, 
+		self.marker1 = self.map_widget_china.set_marker(31.519240, 103.117257, text = '1', icon = self.bn, 
 			text_color = 'black', command = self.define_province_zoom)
 		self.marker2 = self.map_widget_china.set_marker(24.580697, 100.832101, text = '2', icon = self.mark_black,
 			text_color = 'black', command = self.define_province_zoom)
@@ -164,6 +164,10 @@ class myTabView(customtkinter.CTkTabview):
 		self.name2 = customtkinter.CTkLabel(master = self.tab('Map of provinces Locations'), text = '')
 		self.name2.grid(row = 0, column = 1)
 
+		self.BirdImage = customtkinter.CTkImage(dark_image = Image.open('Images/Accipitriforme4.png'), size = (300, 221))
+		#self.BirdImage = customtkinter.CTkLabel(master = self.tab('Species'), image = self.BirdImage, text = '')
+		#self.BirdImage.grid(row = 0, column = 0, padx = 20, pady = 20)
+
 
 	def define_province_zoom(self, marker):
 
@@ -184,7 +188,19 @@ class myTabView(customtkinter.CTkTabview):
 
 	def sites_display_richness(self, marker):
 
-		print(marker.text)
+		x = 0
+
+		self.current_species = turn_species[x] 
+
+		if marker.text in self.current_species.sites_present:
+
+			self.BirdImage = customtkinter.CTkLabel(master = self.tab('Species'), image = self.BirdImage, text = '')
+			self.BirdImage.grid(row = 0, column = 0, padx = 20, pady = 20)
+			self.BirdName = customtkinter.CTkLabel(master = self.tab('Species'), text = self.current_species.scientific_name,
+				font = ('Times New Roman', 25))
+			self.BirdName.grid(row = 1, column = 0)
+
+
 
 
 	def login_user(self):

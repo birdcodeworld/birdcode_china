@@ -23,7 +23,7 @@ class Accipiter_trivirgatus():
 
 Accipiter_trivirgatus_00 = Accipiter_trivirgatus()
 
-
+turn_species = [Accipiter_trivirgatus_00]
 
 
 
