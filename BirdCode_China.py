@@ -18,6 +18,7 @@ from PIL import Image, ImageTk
 username_db = ''
 login_check = False
 types_bor = ''
+folder_content = ''
 
 
 class myTabView(customtkinter.CTkTabview):
@@ -164,7 +165,7 @@ class myTabView(customtkinter.CTkTabview):
 		self.name2 = customtkinter.CTkLabel(master = self.tab('Map of provinces Locations'), text = '')
 		self.name2.grid(row = 0, column = 1)
 
-		self.BirdImage = customtkinter.CTkImage(dark_image = Image.open('Images/Accipitriforme4.png'), size = (300, 221))
+		
 		#self.BirdImage = customtkinter.CTkLabel(master = self.tab('Species'), image = self.BirdImage, text = '')
 		#self.BirdImage.grid(row = 0, column = 0, padx = 20, pady = 20)
 
@@ -188,17 +189,40 @@ class myTabView(customtkinter.CTkTabview):
 
 	def sites_display_richness(self, marker):
 
-		x = 0
+		global folder_content
 
-		self.current_species = turn_species[x] 
+		x = 0
+		counter = 0
+
+		self.current_species = turn_species[x]
+		path = self.current_species.images_url
+		folder_content = os.listdir(self.current_species.images_url)
 
 		if marker.text in self.current_species.sites_present:
 
-			self.BirdImage = customtkinter.CTkLabel(master = self.tab('Species'), image = self.BirdImage, text = '')
-			self.BirdImage.grid(row = 0, column = 0, padx = 20, pady = 20)
+			self.BirdImage = customtkinter.CTkImage(dark_image = Image.open(path + folder_content[1]), size = (300, 221))
+			self.BirdImage_display = customtkinter.CTkLabel(master = self.tab('Species'), image = self.BirdImage, text = '')
+			self.BirdImage_display.grid(row = 0, column = 0, padx = 20, pady = 20)
 			self.BirdName = customtkinter.CTkLabel(master = self.tab('Species'), text = self.current_species.scientific_name,
 				font = ('Times New Roman', 25))
 			self.BirdName.grid(row = 1, column = 0)
+			self.advance_bird_photo = customtkinter.CTkButton(master = self.tab('Species'), text = 'Advance', 
+				command = self.Advance_photo_Bird)
+			self.advance_bird_photo.grid(row = 2, column = 0)
+
+
+	def Advance_photo_Bird(self):
+
+		global folder_content
+
+		print(folder_content)
+
+
+
+		
+
+		
+
 
 
 

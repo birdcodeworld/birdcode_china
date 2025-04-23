@@ -7,8 +7,9 @@ class Accipiter_trivirgatus():
 	def __init__(self):
 
 		self.scientific_name = 'Accipiter trivirgatus'
-		self.presence = False
+		self.chinese_name = '凤头鹰'
 		self.sites_present = ['Chengdu']
+		self.images_url = 'Images/Birds/Accipitriformes/Accipiter_trivirgatus/'
 
 
 	def Image_display(self):
