@@ -133,13 +133,13 @@ class myTabView(customtkinter.CTkTabview):
 		self.change_photo_button_frw.grid(row = 5, column = 1, padx = 20, sticky = 'w')
 
 		self.current_path = os.path.join(os.path.dirname(os.path.abspath(__file__)))
-		self.mark_black = ImageTk.PhotoImage(Image.open("Images/Marker_black.png").resize((40, 52)))
-		self.mark_white = ImageTk.PhotoImage(Image.open(os.path.join(self.current_path, "Images", "Marker_white.png")).resize((35, 45)))
+		self.mark_black = ImageTk.PhotoImage(Image.open("Images/Marker_black.png").resize((30, 39)))
+		self.mark_white = ImageTk.PhotoImage(Image.open(os.path.join(self.current_path, "Images", "Marker_white.png")).resize((30, 39)))
 		self.mark_red = ImageTk.PhotoImage(Image.open(os.path.join(self.current_path, "Images", "Marker_red.png")).resize((40, 52)))
 		self.mark_blue = ImageTk.PhotoImage(Image.open(os.path.join(self.current_path, "Images", "Marker_blue.png")).resize((40, 52)))
 		self.bn = tk.PhotoImage(file = 'Images/Marker_black.png')
 
-		self.marker1 = self.map_widget_china.set_marker(31.519240, 103.117257, text = '1', icon = self.bn, 
+		self.marker1 = self.map_widget_china.set_marker(31.519240, 103.117257, text = '1', icon = self.mark_black, 
 			text_color = 'black', command = self.define_province_zoom)
 		self.marker2 = self.map_widget_china.set_marker(24.580697, 100.832101, text = '2', icon = self.mark_black,
 			text_color = 'black', command = self.define_province_zoom)
