@@ -19,9 +19,10 @@ username_db = ''
 login_check = False
 types_bor = ''
 folder_content = ''
-x = 0
+x = -1
 counter = 0
 path = ''
+site_object = ''
 
 
 class myTabView(customtkinter.CTkTabview):
@@ -168,6 +169,14 @@ class myTabView(customtkinter.CTkTabview):
 		self.name2 = customtkinter.CTkLabel(master = self.tab('Map of provinces Locations'), text = '')
 		self.name2.grid(row = 0, column = 1)
 
+		self.change_bird_init = customtkinter.CTkButton(master = self.tab('Map of provinces Locations'), text = 'Create riddle', 
+			command = self.sites_display_richness)
+		self.change_bird_init.grid(row = 0, column = 1, padx = 20) 
+
+		self.change_bird = customtkinter.CTkButton(master = self.tab('Species'), text = 'Finish', 
+			command = self.sites_display_richness)
+		self.change_bird.grid(row = 0, column = 3, padx = 20)
+
 		
 		#self.BirdImage = customtkinter.CTkLabel(master = self.tab('Species'), image = self.BirdImage, text = '')
 		#self.BirdImage.grid(row = 0, column = 0, padx = 20, pady = 20)
@@ -187,17 +196,39 @@ class myTabView(customtkinter.CTkTabview):
 			self.long = self.value.longitude
 			self.name_marker = self.value.name
 			self.map_widget_province.set_marker(self.lat, self.long, text = self.name_marker, icon = self.mark_blue, 
-				text_color = 'white', command = self.sites_display_richness)
+				text_color = 'white', command = self.click_marker)
 
 
-	def sites_display_richness(self, marker):
+	def click_marker(self, marker):
+
+		global site_object
+
+		site_object = marker.text
+
+
+	def sites_display_richness(self):
 
 		global folder_content
 		global x
 		global counter
 		global path
+		global site_object
 
-		self.current_species = turn_species[x]
+		
+		x = x + 1
+
+		while x < len(turn_species):
+
+			self.current_species = turn_species[x]
+		
+			if site_object not in self.current_species.sites_present:
+
+				x = x + 1
+
+			else:
+
+				break
+
 		path = self.current_species.images_url
 		folder_content = os.listdir(self.current_species.images_url)
 		vertical_zh = self.current_species.chinese_name
@@ -206,25 +237,26 @@ class myTabView(customtkinter.CTkTabview):
 		for i in vertical_zh:
 
 			vertical_name_zh = vertical_name_zh + i + '\n'
+			vertical_name_zh = vertical_name_zh
 
+		vertical_name_zh = (' ' + '\n')*2 + vertical_name_zh + (' ' + '\n')*2  
 
-		if marker.text in self.current_species.sites_present:
-
-			self.BirdImage = customtkinter.CTkImage(dark_image = Image.open(path + folder_content[counter]), size = (550, 475))
-			self.BirdImage_display = customtkinter.CTkLabel(master = self.tab('Species'), image = self.BirdImage, text = '')
-			self.BirdImage_display.grid(row = 0, column = 0, padx = 20, pady = 20, columnspan = 2)
-			self.BirdName = customtkinter.CTkLabel(master = self.tab('Species'), text = self.current_species.scientific_name,
-				font = ('Times New Roman', 25))
-			self.BirdName.grid(row = 1, column = 0)
-			self.retro_bird_photo = customtkinter.CTkButton(master = self.tab('Species'), text = 'Retro',
-				command = self.retro_photo_bird)
-			self.retro_bird_photo.grid(row = 2, column = 0, pady = 20)
-			self.advance_bird_photo = customtkinter.CTkButton(master = self.tab('Species'), text = 'Advance', 
-				command = self.Advance_photo_Bird)
-			self.advance_bird_photo.grid(row = 2, column = 1, pady = 20)
-			self.name_bird_zh = customtkinter.CTkLabel(master = self.tab('Species'), text = vertical_name_zh,
-				font = ('Kaiti', 50))
-			self.name_bird_zh.grid(row = 0, column = 2, padx = 30, rowspan = 2)
+		self.BirdImage = customtkinter.CTkImage(dark_image = Image.open(path + folder_content[counter]), size = (550, 475))
+		self.BirdImage_display = customtkinter.CTkLabel(master = self.tab('Species'), image = self.BirdImage, text = '')
+		self.BirdImage_display.grid(row = 0, column = 0, padx = 20, pady = 20, columnspan = 2)
+		self.BirdName = customtkinter.CTkLabel(master = self.tab('Species'), 
+			text = '    ' + self.current_species.scientific_name + '    ', font = ('Times New Roman', 25))
+		self.BirdName.grid(row = 1, column = 0, columnspan = 2)
+		#self.BirdName.configure(text = self.current_species.scientific_name)
+		self.retro_bird_photo = customtkinter.CTkButton(master = self.tab('Species'), text = 'Retro',
+			command = self.retro_photo_bird)
+		self.retro_bird_photo.grid(row = 2, column = 0, pady = 20)
+		self.advance_bird_photo = customtkinter.CTkButton(master = self.tab('Species'), text = 'Advance', 
+			command = self.Advance_photo_Bird)
+		self.advance_bird_photo.grid(row = 2, column = 1, pady = 20)
+		self.name_bird_zh = customtkinter.CTkLabel(master = self.tab('Species'), text = vertical_name_zh,
+			font = ('Kaiti', 50))
+		self.name_bird_zh.grid(row = 0, column = 2, padx = 30, rowspan = 3)
 
 
 	def retro_photo_bird(self):
