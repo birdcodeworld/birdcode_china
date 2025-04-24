@@ -214,7 +214,7 @@ class myTabView(customtkinter.CTkTabview):
 		global path
 		global site_object
 
-		
+		counter = 0		
 		x = x + 1
 
 		while x < len(turn_species):
@@ -239,7 +239,7 @@ class myTabView(customtkinter.CTkTabview):
 			vertical_name_zh = vertical_name_zh + i + '\n'
 			vertical_name_zh = vertical_name_zh
 
-		vertical_name_zh = (' ' + '\n')*2 + vertical_name_zh + (' ' + '\n')*2  
+		vertical_name_zh = ' \n' + '中\n国\n鸟\n类\n' + vertical_name_zh + (' ' + '\n')*2  
 
 		self.BirdImage = customtkinter.CTkImage(dark_image = Image.open(path + folder_content[counter]), size = (550, 475))
 		self.BirdImage_display = customtkinter.CTkLabel(master = self.tab('Species'), image = self.BirdImage, text = '')
@@ -255,7 +255,7 @@ class myTabView(customtkinter.CTkTabview):
 			command = self.Advance_photo_Bird)
 		self.advance_bird_photo.grid(row = 2, column = 1, pady = 20)
 		self.name_bird_zh = customtkinter.CTkLabel(master = self.tab('Species'), text = vertical_name_zh,
-			font = ('Kaiti', 50))
+			font = ('Kaiti', 45))
 		self.name_bird_zh.grid(row = 0, column = 2, padx = 30, rowspan = 3)
 
 

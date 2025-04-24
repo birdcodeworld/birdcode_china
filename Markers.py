@@ -21,7 +21,8 @@ from Sites_Classes import *
 # 295, 7800, 'Rilong'], ['Labahe', '喇叭河自然保护区', 30.186972, 102.43161, 249, 3604, 'Labahe National Nature Reserve'],
 # ['Longcanggou', '龙苍沟', 29.618834, 102.890785, 306, 13330, 'Longcanggou general area']]}
 
-bird_china_markers = {'1': [Chengdu_00]}
+bird_china_markers = {'1': [Chengdu_00, Tangjiahe_00, Gonggangling_00, Zoige_00, Mengbishan_00, Balangshan_00, Labahe_00, 
+Longcanggou_00]}
 
 #['Wawu Mountain', '瓦屋山', 29.660011, 102.99079, 232, 3321, 'Wawu Mountain general area'] 
 #['Erlangshan', '二郎山', 29.844814, 102.25032, 208, 1936, 'Erlang Mountain']
