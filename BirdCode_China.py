@@ -162,7 +162,7 @@ class myTabView(customtkinter.CTkTabview):
 			text_color = 'black', command = self.define_province_zoom)
 
 		self.map_widget_province = TkinterMapView(master = self.tab('Map of provinces Locations'), width = 800, height = 570)
-		self.map_widget_province.grid(row = 0, column = 0, padx = 10, pady = 10, rowspan = 2)
+		self.map_widget_province.grid(row = 0, column = 0, padx = 10, pady = 10, rowspan = 3)
 		self.map_widget_province.set_position(30.499426, 102.853586)
 		self.map_widget_province.set_zoom(4)
 		self.map_widget_province.set_tile_server('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}')
@@ -177,9 +177,14 @@ class myTabView(customtkinter.CTkTabview):
 			command = self.sites_display_richness)
 		self.change_bird.grid(row = 0, column = 3, padx = 20)
 
+		self.ecoregion_label = customtkinter.CTkLabel(master = self.tab('Map of provinces Locations'), text = 'Ecoregion WWF',
+			font = ('Times New Roman', 25))
+		self.ecoregion_label.grid(row = 1, column = 1, pady = 10, padx = 20)
+
+
 		self.ecoregion_site = customtkinter.CTkLabel(master = self.tab('Map of provinces Locations'), 
 			font = ('Times New Roman', 20), text = '')
-		self.ecoregion_site.grid(row = 1, column = 1, padx = 10)
+		self.ecoregion_site.grid(row = 2, column = 1, padx = 30)
 
 		
 		#self.BirdImage = customtkinter.CTkLabel(master = self.tab('Species'), image = self.BirdImage, text = '')
@@ -218,6 +223,7 @@ class myTabView(customtkinter.CTkTabview):
 
 				self.gis_site_code = value.code + 1
 				self.current_site = value
+				break
 
 
 	def sites_display_richness(self):
