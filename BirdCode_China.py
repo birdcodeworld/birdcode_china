@@ -162,7 +162,7 @@ class myTabView(customtkinter.CTkTabview):
 			text_color = 'black', command = self.define_province_zoom)
 
 		self.map_widget_province = TkinterMapView(master = self.tab('Map of provinces Locations'), width = 800, height = 570)
-		self.map_widget_province.grid(row = 0, column = 0, padx = 10, pady = 10)
+		self.map_widget_province.grid(row = 0, column = 0, padx = 10, pady = 10, rowspan = 2)
 		self.map_widget_province.set_position(30.499426, 102.853586)
 		self.map_widget_province.set_zoom(4)
 		self.map_widget_province.set_tile_server('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}')
@@ -177,6 +177,10 @@ class myTabView(customtkinter.CTkTabview):
 			command = self.sites_display_richness)
 		self.change_bird.grid(row = 0, column = 3, padx = 20)
 
+		self.ecoregion_site = customtkinter.CTkLabel(master = self.tab('Map of provinces Locations'), 
+			font = ('Times New Roman', 20), text = '')
+		self.ecoregion_site.grid(row = 1, column = 1, padx = 10)
+
 		
 		#self.BirdImage = customtkinter.CTkLabel(master = self.tab('Species'), image = self.BirdImage, text = '')
 		#self.BirdImage.grid(row = 0, column = 0, padx = 20, pady = 20)
@@ -189,8 +193,9 @@ class myTabView(customtkinter.CTkTabview):
 		self.map_widget_province.set_position(marker.position[0], marker.position[1])
 		self.map_widget_province.set_zoom(7)
 		marker.change_icon(self.mark_red)
+		self.marker_cod1 = marker.text
 
-		for i, self.value in enumerate(bird_china_markers[marker.text]):
+		for i, self.value in enumerate(bird_china_markers[self.marker_cod1]):
 
 			self.lat = self.value.latitude
 			self.long = self.value.longitude
@@ -203,7 +208,16 @@ class myTabView(customtkinter.CTkTabview):
 
 		global site_object
 
+		self.gis_site_code = -1
+
 		site_object = marker.text
+
+		for i, value in enumerate(bird_china_markers[self.marker_cod1]):
+
+			if value.name == site_object:
+
+				self.gis_site_code = value.code + 1
+				self.current_site = value
 
 
 	def sites_display_richness(self):
@@ -257,6 +271,7 @@ class myTabView(customtkinter.CTkTabview):
 		self.name_bird_zh = customtkinter.CTkLabel(master = self.tab('Species'), text = vertical_name_zh,
 			font = ('Kaiti', 45))
 		self.name_bird_zh.grid(row = 0, column = 2, padx = 30, rowspan = 3)
+		self.ecoregion_site.configure(text = self.current_site.db_connection(self.gis_site_code))
 
 
 	def retro_photo_bird(self):

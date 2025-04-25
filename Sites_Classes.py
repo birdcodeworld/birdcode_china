@@ -1,10 +1,37 @@
 # ========================= Sites Classes ==========================================
 
+import psycopg2
 
-class Chengdu():
+
+class Point():
 
 	def __init__(self):
 
+		self.description = 'Locality'
+		self.ecoregion_location = ''
+
+	def db_connection(self, code):
+
+		self.miConexion_point = psycopg2.connect(host = 'bctc8tdlqly4cpe3dj0b-postgresql.services.clever-cloud.com', port = 50013, 
+		user = 'uylah5thtah6mgce6pcu', dbname = 'bctc8tdlqly4cpe3dj0b', password = 'W4IDeZIuZSOKKxRqzXhjFsiu1WFcYT')
+		self.miCursor_point = self.miConexion_point.cursor()
+		self.myProvince = '''select eco_name from ecoregions_china, birding_sites_china 
+		where st_intersects(ecoregions_china.geom, birding_sites_china.geom) and birding_sites_china.id = (%s);'''
+
+		self.dlt12 = (int(code), )
+
+		self.miCursor_point.execute(self.myProvince, self.dlt12)
+		self.myProvince_results = self.miCursor_point.fetchall()
+		
+		return self.myProvince_results[0][0]
+
+
+
+class Chengdu(Point):
+
+	def __init__(self):
+
+		self.code = 0
 		self.name = 'Chengdu'
 		self.name_zh = '成都植物园'
 		self.latitude = 30.764904
@@ -100,6 +127,7 @@ class Longcanggou():
 
 
 Chengdu_00 = Chengdu()
+#print(Chengdu_00.db_connection('1'))
 Tangjiahe_00 = Tangjiahe()
 Gonggangling_00 = Gonggangling()
 Zoige_00 = Zoige()
