@@ -265,7 +265,7 @@ class myTabView(customtkinter.CTkTabview):
 		self.BirdImage_display = customtkinter.CTkLabel(master = self.tab('Species'), image = self.BirdImage, text = '')
 		self.BirdImage_display.grid(row = 0, column = 0, padx = 20, pady = 20, columnspan = 2)
 		self.BirdName = customtkinter.CTkLabel(master = self.tab('Species'), 
-			text = '    ' + self.current_species.scientific_name + '    ', font = ('Times New Roman', 25))
+			text = '       ' + self.current_species.scientific_name + '       ', font = ('Times New Roman', 25))
 		self.BirdName.grid(row = 1, column = 0, columnspan = 2)
 		#self.BirdName.configure(text = self.current_species.scientific_name)
 		self.retro_bird_photo = customtkinter.CTkButton(master = self.tab('Species'), text = 'Retro',
