@@ -25,6 +25,9 @@ class Point():
 		
 		return self.myProvince_results[0][0]
 
+		self.miConexion_point.commit()
+		self.miConexion_point.close()
+
 
 
 class Chengdu(Point):
@@ -38,6 +41,8 @@ class Chengdu(Point):
 		self.longitude = 104.1285
 		self.richness = 115
 		self.gbif_records = 1084
+
+
 
 
 class Tangjiahe():
@@ -138,3 +143,6 @@ Longcanggou_00 = Longcanggou()
 
 
 Sites = [Chengdu_00, Tangjiahe_00, Gonggangling_00, Zoige_00, Mengbishan_00, Balangshan_00, Labahe_00, Longcanggou_00]
+Route1 = [[30.8080854, 104.1500728], [30.9206707, 104.2339539], [31.0125197, 104.3026184], [31.2030004, 104.4372010],
+[31.4212284, 104.5745301], [31.6849526, 104.6835089], [31.9596719, 104.7906256], [32.1691553, 104.8071051],
+[32.4569893, 104.7906256], [32.6028766, 104.8510504]]

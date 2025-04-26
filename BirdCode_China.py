@@ -23,6 +23,7 @@ x = -1
 counter = 0
 path = ''
 site_object = ''
+pos = -1
 
 
 class myTabView(customtkinter.CTkTabview):
@@ -142,6 +143,8 @@ class myTabView(customtkinter.CTkTabview):
 		self.mark_white = ImageTk.PhotoImage(Image.open(os.path.join(self.current_path, "Images", "Marker_white.png")).resize((30, 39)))
 		self.mark_red = ImageTk.PhotoImage(Image.open(os.path.join(self.current_path, "Images", "Marker_red.png")).resize((40, 52)))
 		self.mark_blue = ImageTk.PhotoImage(Image.open(os.path.join(self.current_path, "Images", "Marker_blue.png")).resize((40, 52)))
+		self.trav_icon = ImageTk.PhotoImage(Image.open(os.path.join(self.current_path, "Images", "Birder.png")).resize((25, 23)))
+
 		self.bn = tk.PhotoImage(file = 'Images/Marker_black.png')
 
 		self.marker1 = self.map_widget_china.set_marker(31.519240, 103.117257, text = '1', icon = self.mark_black, 
@@ -162,7 +165,7 @@ class myTabView(customtkinter.CTkTabview):
 			text_color = 'black', command = self.define_province_zoom)
 
 		self.map_widget_province = TkinterMapView(master = self.tab('Map of provinces Locations'), width = 800, height = 570)
-		self.map_widget_province.grid(row = 0, column = 0, padx = 10, pady = 10, rowspan = 3)
+		self.map_widget_province.grid(row = 0, column = 0, padx = 10, pady = 10, rowspan = 4)
 		self.map_widget_province.set_position(30.499426, 102.853586)
 		self.map_widget_province.set_zoom(4)
 		self.map_widget_province.set_tile_server('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}')
@@ -173,18 +176,21 @@ class myTabView(customtkinter.CTkTabview):
 			command = self.sites_display_richness)
 		self.change_bird_init.grid(row = 0, column = 1, padx = 20) 
 
-		self.change_bird = customtkinter.CTkButton(master = self.tab('Species'), text = 'Finish', 
-			command = self.sites_display_richness)
-		self.change_bird.grid(row = 0, column = 3, padx = 20)
-
 		self.ecoregion_label = customtkinter.CTkLabel(master = self.tab('Map of provinces Locations'), text = 'Ecoregion WWF',
 			font = ('Times New Roman', 25))
 		self.ecoregion_label.grid(row = 1, column = 1, pady = 10, padx = 20)
 
-
 		self.ecoregion_site = customtkinter.CTkLabel(master = self.tab('Map of provinces Locations'), 
 			font = ('Times New Roman', 20), text = '')
 		self.ecoregion_site.grid(row = 2, column = 1, padx = 30)
+
+		self.change_bird = customtkinter.CTkButton(master = self.tab('Species'), text = 'Finish', 
+			command = self.sites_display_richness)
+		self.change_bird.grid(row = 0, column = 3, padx = 20)
+
+		self.move_traveler = customtkinter.CTkButton(master = self.tab('Map of provinces Locations'), text = 'Move traveler',
+			command = self.move_traveler_function)
+		self.move_traveler.grid(row = 3, column = 1, padx = 30)
 
 		
 		#self.BirdImage = customtkinter.CTkLabel(master = self.tab('Species'), image = self.BirdImage, text = '')
@@ -199,13 +205,15 @@ class myTabView(customtkinter.CTkTabview):
 		self.map_widget_province.set_zoom(7)
 		marker.change_icon(self.mark_red)
 		self.marker_cod1 = marker.text
+		self.traveler = self.map_widget_province.set_marker(Sites[0].latitude, Sites[0].longitude, text = '',
+			icon = self.trav_icon, command = self.traveler_discoveries)
 
 		for i, self.value in enumerate(bird_china_markers[self.marker_cod1]):
 
 			self.lat = self.value.latitude
 			self.long = self.value.longitude
 			self.name_marker = self.value.name
-			self.map_widget_province.set_marker(self.lat, self.long, text = self.name_marker, icon = self.mark_blue, 
+			self.map_widget_province.set_marker(self.lat, self.long, text = self.name_marker, icon = self.mark_black, 
 				text_color = 'white', command = self.click_marker)
 
 
@@ -226,6 +234,26 @@ class myTabView(customtkinter.CTkTabview):
 				break
 
 
+	def move_traveler_function(self):
+
+		global pos
+
+		pos = pos + 1
+		self.traveler.set_position(Route1[pos][0], Route1[pos][1])
+
+	
+	def traveler_discoveries(self, marker):
+
+		global pos
+
+
+		self.miConexion_point_disc = psycopg2.connect(host = 'bctc8tdlqly4cpe3dj0b-postgresql.services.clever-cloud.com', port = 50013, 
+		user = 'uylah5thtah6mgce6pcu', dbname = 'bctc8tdlqly4cpe3dj0b', password = 'W4IDeZIuZSOKKxRqzXhjFsiu1WFcYT')
+		self.miCursor_point_disc = self.miConexion_point_disc.cursor()
+		self.traveler_pos = '''select eco_name from ecoregions_china, birding_sites_china 
+		where st_intersects(ecoregions_china.geom, birding_sites_china.geom) and birding_sites_china.id = (%s);'''
+
+		
 	def sites_display_richness(self):
 
 		global folder_content
@@ -308,15 +336,6 @@ class myTabView(customtkinter.CTkTabview):
 
 
 		print(folder_content)
-
-
-
-		
-
-		
-
-
-
 
 
 	def login_user(self):
