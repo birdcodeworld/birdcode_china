@@ -145,8 +145,9 @@ class myTabView(customtkinter.CTkTabview):
 		self.mark_blue = ImageTk.PhotoImage(Image.open(os.path.join(self.current_path, "Images", "Marker_blue.png")).resize((40, 52)))
 		self.trav_icon = ImageTk.PhotoImage(Image.open(os.path.join(self.current_path, "Images", "Birder.png")).resize((25, 23)))
 
-		self.bn = tk.PhotoImage(file = 'Images/Marker_black.png')
+		#self.bn = tk.PhotoImage(file = 'Images/Marker_black.png')
 
+		
 		self.marker1 = self.map_widget_china.set_marker(31.519240, 103.117257, text = '1', icon = self.mark_black, 
 			text_color = 'black', command = self.define_province_zoom)
 		self.marker2 = self.map_widget_china.set_marker(24.580697, 100.832101, text = '2', icon = self.mark_black,
@@ -207,6 +208,7 @@ class myTabView(customtkinter.CTkTabview):
 		self.marker_cod1 = marker.text
 		self.traveler = self.map_widget_province.set_marker(Sites[0].latitude, Sites[0].longitude, text = '',
 			icon = self.trav_icon, command = self.traveler_discoveries)
+		
 
 		for i, self.value in enumerate(bird_china_markers[self.marker_cod1]):
 
