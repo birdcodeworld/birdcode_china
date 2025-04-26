@@ -169,7 +169,8 @@ class myTabView(customtkinter.CTkTabview):
 		self.map_widget_province.grid(row = 0, column = 0, padx = 10, pady = 10, rowspan = 4)
 		self.map_widget_province.set_position(30.499426, 102.853586)
 		self.map_widget_province.set_zoom(4)
-		self.map_widget_province.set_tile_server('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}')
+		#self.map_widget_province.set_tile_server('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}')
+		self.map_widget_province.set_tile_server('http://wprd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=6&x={x}&y={y}&z={z}')
 		self.name2 = customtkinter.CTkLabel(master = self.tab('Map of provinces Locations'), text = '')
 		self.name2.grid(row = 0, column = 1)
 
