@@ -186,9 +186,56 @@ class myTabView(customtkinter.CTkTabview):
 			font = ('Times New Roman', 20), text = '')
 		self.ecoregion_site.grid(row = 2, column = 1, padx = 30)
 
+		self.guessing_names_title = customtkinter.CTkLabel(master = self.tab('Species'), text = "GUESS THE BIRD'S NAME",
+			font = ('Times New Roman', 25))
+		self.guessing_names_title.grid(row = 0, column = 3, padx = 20, pady = 20, columnspan = 4)
+		
+		self.guessing_names_title_zh = customtkinter.CTkLabel(master = self.tab('Species'), text = "Chinese name",
+			font = ('Times New Roman', 25))
+		self.guessing_names_title_zh.grid(row = 1, column = 3, padx = 20, columnspan = 2)
+
+		self.guessing_names_title_en = customtkinter.CTkLabel(master = self.tab('Species'), text = "English name",
+			font = ('Times New Roman', 25))
+		self.guessing_names_title_en.grid(row = 1, column = 5, padx = 20, columnspan = 2)
+		
+		self.birdname_zh_entry = customtkinter.CTkEntry(master = self.tab('Species'), width = 200, font = ('Kaiti', 25))
+		self.birdname_zh_entry.grid(row = 2, column = 3, padx = 20, columnspan = 2)
+
+		self.birdname_en_entry = customtkinter.CTkEntry(master = self.tab('Species'), width = 245, font = ('Times New Roman', 22))
+		self.birdname_en_entry.grid(row = 2, column = 5, padx = 20, columnspan = 2)
+
+		self.listen_birdname_btt = ImageTk.PhotoImage(Image.open("Images/Listen_bird_name.png").resize((36, 35)))
+		self.send_name_zh_ph = ImageTk.PhotoImage(Image.open("Images/Send_name.png").resize((40, 35)))
+		self.listen_br_button_zh = customtkinter.CTkButton(master = self.tab('Species'), image = self.listen_birdname_btt, text = '', width = 20)
+		self.listen_br_button_zh.grid(row = 3, column = 3, sticky = 'e')
+		self.send_name_zh = customtkinter.CTkButton(master = self.tab('Species'), image = self.send_name_zh_ph, text = '', width = 20)
+		self.send_name_zh.grid(row = 3, column = 4)
+		self.listen_br_button_en = customtkinter.CTkButton(master = self.tab('Species'), image = self.listen_birdname_btt, text = '', width = 20)
+		self.listen_br_button_en.grid(row = 3, column = 5, padx = (90, 0))
+		self.send_name_en = customtkinter.CTkButton(master = self.tab('Species'), image = self.send_name_zh_ph, text = '', width = 20)
+		self.send_name_en.grid(row = 3, column = 6, padx = (10, 30))
+		self.hits_name_zh_title = customtkinter.CTkLabel(master = self.tab('Species'), text = 'Hits', font = ('Times New Roman', 20))
+		self.hits_name_zh_title.grid(row = 4, column = 3)
+		self.wrongs_name_zh_title = customtkinter.CTkLabel(master = self.tab('Species'), text = 'Wrongs', font = ('Times New Roman', 20))
+		self.wrongs_name_zh_title.grid(row = 4, column = 4)
+		self.hits_name_en_title = customtkinter.CTkLabel(master = self.tab('Species'), text = 'Hits', font = ('Times New Roman', 20))
+		self.hits_name_en_title.grid(row = 4, column = 5)
+		self.wrongs_name_en_title = customtkinter.CTkLabel(master = self.tab('Species'), text = 'Wrongs', font = ('Times New Roman', 20))
+		self.wrongs_name_en_title.grid(row = 4, column = 6, sticky = 'w')
+		self.hits_name_zh_label = customtkinter.CTkLabel(master = self.tab('Species'), text = '0', font = ('Times New Roman', 50))
+		self.hits_name_zh_label.grid(row = 5, column = 3)
+		self.wrongs_name_zh_label = customtkinter.CTkLabel(master = self.tab('Species'), text = '0', font = ('Times New Roman', 50))
+		self.wrongs_name_zh_label.grid(row = 5, column = 4)
+		self.hits_name_en_label = customtkinter.CTkLabel(master = self.tab('Species'), text = '0', font = ('Times New Roman', 50))
+		self.hits_name_en_label.grid(row = 5, column = 5)
+		self.wrongs_name_en_label = customtkinter.CTkLabel(master = self.tab('Species'), text = '0', font = ('Times New Roman', 50))
+		self.wrongs_name_en_label.grid(row = 5, column = 6, sticky = 'w')
+
+
+
 		self.change_bird = customtkinter.CTkButton(master = self.tab('Species'), text = 'Finish', 
 			command = self.sites_display_richness)
-		self.change_bird.grid(row = 0, column = 3, padx = 20)
+		self.change_bird.grid(row = 6, column = 5, padx = 20)
 
 		self.move_traveler = customtkinter.CTkButton(master = self.tab('Map of provinces Locations'), text = 'Move traveler',
 			command = self.move_traveler_function)
@@ -294,20 +341,20 @@ class myTabView(customtkinter.CTkTabview):
 
 		self.BirdImage = customtkinter.CTkImage(dark_image = Image.open(path + folder_content[counter]), size = (550, 475))
 		self.BirdImage_display = customtkinter.CTkLabel(master = self.tab('Species'), image = self.BirdImage, text = '')
-		self.BirdImage_display.grid(row = 0, column = 0, padx = 20, pady = 20, columnspan = 2)
+		self.BirdImage_display.grid(row = 0, column = 0, padx = 20, pady = (10,0), columnspan = 2, rowspan = 6)
 		self.BirdName = customtkinter.CTkLabel(master = self.tab('Species'), 
 			text = '       ' + self.current_species.scientific_name + '       ', font = ('Times New Roman', 25))
-		self.BirdName.grid(row = 1, column = 0, columnspan = 2)
+		self.BirdName.grid(row = 6, column = 0, pady = 10, columnspan = 2)
 		#self.BirdName.configure(text = self.current_species.scientific_name)
 		self.retro_bird_photo = customtkinter.CTkButton(master = self.tab('Species'), text = 'Retro',
 			command = self.retro_photo_bird)
-		self.retro_bird_photo.grid(row = 2, column = 0, pady = 20)
+		self.retro_bird_photo.grid(row = 7, column = 0, pady = 5)
 		self.advance_bird_photo = customtkinter.CTkButton(master = self.tab('Species'), text = 'Advance', 
 			command = self.Advance_photo_Bird)
-		self.advance_bird_photo.grid(row = 2, column = 1, pady = 20)
+		self.advance_bird_photo.grid(row = 7, column = 1, pady = 5)
 		self.name_bird_zh = customtkinter.CTkLabel(master = self.tab('Species'), text = vertical_name_zh,
 			font = ('Kaiti', 45))
-		self.name_bird_zh.grid(row = 0, column = 2, padx = 30, rowspan = 3)
+		self.name_bird_zh.grid(row = 0, column = 2, padx = 20, rowspan = 6)
 		self.ecoregion_site.configure(text = self.current_site.db_connection(self.gis_site_code))
 
 
@@ -542,6 +589,7 @@ class App(customtkinter.CTk):
 		super().__init__()
 		self.geometry('1250x650')
 		self.title('BirdCode World')
+		self.resizable(False,False)
 		#self.grid_columnconfigure((0, 2), weight = 1)
 		customtkinter.set_appearance_mode('dark')
 		customtkinter.set_default_color_theme('green')
