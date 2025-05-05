@@ -18,9 +18,9 @@ class Accipiter_soloensis():
 	def __init__(self):
 
 		self.scientific_name = 'Accipiter soloensis'
-		self.chinese_name = ''
-		self.sites_present = []
-		self.images_url = ''
+		self.chinese_name = '赤腹鹰'
+		self.sites_present = ['Chengdu']
+		self.images_url = 'Images/Birds/Accipitriformes/Accipiter_soloensis/'
 
 
 class Buteo_japonicus():
