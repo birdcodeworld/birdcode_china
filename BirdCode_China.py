@@ -211,7 +211,7 @@ class myTabView(customtkinter.CTkTabview):
 		self.send_name_zh = customtkinter.CTkButton(master = self.tab('Species'), image = self.send_name_zh_ph, text = '', width = 20)
 		self.send_name_zh.grid(row = 3, column = 4)
 		self.listen_br_button_en = customtkinter.CTkButton(master = self.tab('Species'), image = self.listen_birdname_btt, text = '', width = 20)
-		self.listen_br_button_en.grid(row = 3, column = 5, padx = (60, 0), sticky = 'w')
+		self.listen_br_button_en.grid(row = 3, column = 5, padx = (65, 0), sticky = 'w')
 		self.send_name_en = customtkinter.CTkButton(master = self.tab('Species'), image = self.send_name_zh_ph, text = '', width = 20)
 		self.send_name_en.grid(row = 3, column = 6, padx = (0, 30), sticky = 'w')
 		self.hits_name_zh_title = customtkinter.CTkLabel(master = self.tab('Species'), text = 'Hits', font = ('Times New Roman', 20))
@@ -337,7 +337,7 @@ class myTabView(customtkinter.CTkTabview):
 			vertical_name_zh = vertical_name_zh + i + '\n'
 			vertical_name_zh = vertical_name_zh
 
-		vertical_name_zh = ' \n' + '中\n国\n鸟\n类\n' + vertical_name_zh + (' ' + '\n')*2  
+		vertical_name_zh = ' \n' + '中\n国\n鸟\n类\n' + vertical_name_zh #+ (' ' + '\n')*2  
 
 		self.BirdImage = customtkinter.CTkImage(dark_image = Image.open(path + folder_content[counter]), size = (550, 475))
 		self.BirdImage_display = customtkinter.CTkLabel(master = self.tab('Species'), image = self.BirdImage, text = '')
